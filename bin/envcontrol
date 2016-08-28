@@ -93,6 +93,39 @@ sub display_headers {
     );
 
     $self->{aux1_header}->SetFont($font);
+
+    # aux 2 header
+
+    $self->{aux2_header} = Wx::StaticText->new(
+        $panel,
+        3,
+        "Auxillary #2",
+        $self->{xy}{aux2_header}
+    );
+
+    $self->{aux2_header}->SetFont($font);
+
+     # aux 3 header
+
+    $self->{aux3_header} = Wx::StaticText->new(
+        $panel,
+        4,
+        "Auxillary #3",
+        $self->{xy}{aux3_header}
+    );
+
+    $self->{aux3_header}->SetFont($font);
+
+    # aux 4 header
+
+    $self->{aux4_header} = Wx::StaticText->new(
+        $panel,
+        5,
+        "Auxillary #4",
+        $self->{xy}{aux4_header}
+    );
+
+    $self->{aux4_header}->SetFont($font);
 }
 sub display_limits {
     my ($self, $panel) = @_;
@@ -126,7 +159,40 @@ sub display_limits {
         $self->{xy}{aux1_status},
     );
 
-    $self->{h_display}->SetFont($font);
+    $self->{aux1_display}->SetFont($font);
+
+     # aux2 status
+
+    $self->{aux2_display} = Wx::StaticText->new(
+        $panel,
+        4,
+        "off",
+        $self->{xy}{aux2_status},
+    );
+
+    $self->{aux2_display}->SetFont($font);
+
+    # aux3 status
+
+    $self->{aux3_display} = Wx::StaticText->new(
+        $panel,
+        5,
+        "off",
+        $self->{xy}{aux3_status},
+    );
+
+    $self->{aux3_display}->SetFont($font);
+
+    # aux4 status
+
+    $self->{aux4_display} = Wx::StaticText->new(
+        $panel,
+        6,
+        "off",
+        $self->{xy}{aux4_status},
+    );
+
+    $self->{aux4_display}->SetFont($font);
 }
 sub display_env {
     my ($self, $panel) = @_;
@@ -220,6 +286,71 @@ sub buttons {
 
     EVT_BUTTON($self, 6, \&aux1_off);
 
+    # aux2 on
+
+     $self->{aux2_on} = Wx::Button->new(
+        $panel,
+        7,
+        "on",
+        $self->{xy}{aux2_on},
+    );
+
+    EVT_BUTTON($self, 7, \&aux2_on);
+
+    # aux2 off
+
+     $self->{aux2_off} = Wx::Button->new(
+        $panel,
+        8,
+        "off",
+        $self->{xy}{aux2_off},
+    );
+
+    EVT_BUTTON($self, 8, \&aux2_off);
+
+    # aux3 on
+
+     $self->{aux3_on} = Wx::Button->new(
+        $panel,
+        8,
+        "on",
+        $self->{xy}{aux3_on},
+    );
+
+    EVT_BUTTON($self, 8, \&aux3_on);
+
+    # aux3 off
+
+     $self->{aux3_off} = Wx::Button->new(
+        $panel,
+        9,
+        "off",
+        $self->{xy}{aux3_off},
+    );
+
+    EVT_BUTTON($self, 9, \&aux3_off);
+
+    # aux4 on
+
+     $self->{aux4_on} = Wx::Button->new(
+        $panel,
+        10,
+        "on",
+        $self->{xy}{aux4_on},
+    );
+
+    EVT_BUTTON($self, 10, \&aux4_on);
+
+    # aux4 off
+
+     $self->{aux4_off} = Wx::Button->new(
+        $panel,
+        11,
+        "off",
+        $self->{xy}{aux4_off},
+    );
+
+    EVT_BUTTON($self, 11, \&aux4_off);
 }
 sub temp_check_event {
     my ($self, $panel) = @_;
@@ -254,10 +385,42 @@ sub get_env {
 sub aux1_on {
     my $self = shift;
     $self->{aux1_pin}->write(HIGH);
+    $self->{aux1_display}->SetLabel("on");
 }
 sub aux1_off {
     my $self = shift;
     $self->{aux1_pin}->write(LOW);
+    $self->{aux1_display}->SetLabel("off");
+}
+sub aux2_on {
+    my $self = shift;
+    $self->{aux2_pin}->write(HIGH);
+    $self->{aux2_display}->SetLabel("on");
+}
+sub aux2_off {
+    my $self = shift;
+    $self->{aux2_pin}->write(LOW);
+    $self->{aux2_display}->SetLabel("off");
+}
+sub aux3_on {
+    my $self = shift;
+    $self->{aux3_pin}->write(HIGH);
+    $self->{aux3_display}->SetLabel("on");
+}
+sub aux3_off {
+    my $self = shift;
+    $self->{aux3_pin}->write(LOW);
+    $self->{aux3_display}->SetLabel("off");
+}
+sub aux4_on {
+    my $self = shift;
+    $self->{aux4_pin}->write(HIGH);
+    $self->{aux4_display}->SetLabel("on");
+}
+sub aux4_off {
+    my $self = shift;
+    $self->{aux4_pin}->write(LOW);
+    $self->{aux4_display}->SetLabel("off");
 }
 sub temp_raise {
     my( $self, $event ) = @_;
@@ -302,15 +465,55 @@ sub _xy {
         # aux 1
 
         aux1_header => [240, 5],
+        aux1_status => [240, 30],
         aux1_on     => [240, 60],
         aux1_off    => [330, 60],
+
+        # aux 2
+
+        aux2_header => [240, 120],
+        aux2_status => [240, 145],
+        aux2_on     => [240, 175],
+        aux2_off    => [330, 175],
+
+        # aux
+
+        aux3_header => [240, 220],
+        aux3_status => [240, 245],
+        aux3_on     => [240, 275],
+        aux3_off    => [330, 275],
+
+        # aux 4
+
+        aux4_header => [240, 320],
+        aux4_status => [240, 345],
+        aux4_on     => [240, 375],
+        aux4_off    => [330, 375],
     };
 }
 sub _pin_setup {
     my $self = shift;
+
+    # aux 1
     $self->{aux1_pin} = $pi->pin(29);
     $self->{aux1_pin}->mode(OUTPUT);
     $self->{aux1_pin}->write(LOW);
+
+    # aux 2
+    $self->{aux2_pin} = $pi->pin(27);
+    $self->{aux2_pin}->mode(OUTPUT);
+    $self->{aux2_pin}->write(LOW);
+
+    # aux 3
+    $self->{aux3_pin} = $pi->pin(26);
+    $self->{aux3_pin}->mode(OUTPUT);
+    $self->{aux3_pin}->write(LOW);
+
+    # aux 4
+    $self->{aux4_pin} = $pi->pin(4);
+    $self->{aux4_pin}->mode(OUTPUT);
+    $self->{aux4_pin}->write(LOW);
+
 }
 package EnvControl;
 
