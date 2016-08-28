@@ -256,13 +256,13 @@ sub buttons {
     # hum up
 
     $self->{hum_raise} = Wx::Button->new(
-        $panel,             # parent
+        $panel,
         4,
         "raise",
         $self->{xy}{h_raise},
     );
 
-    EVT_BUTTON($self, 4, \&aux1_on);
+    EVT_BUTTON($self, 4, \&hum_raise);
 
     # aux1 on
 
@@ -368,18 +368,27 @@ sub get_env {
 
     if ($self->{t_limit} < $temp){
         $self->{temp}->SetLabel("*$temp F");
+        $self->{aux1_pin}->write(HIGH);
+        $self->{aux1_display}->SetLabel("on");
+
     }
     else {
         $self->{temp}->SetLabel("$temp F");
+        $self->{aux1_pin}->write(LOW);
+        $self->{aux1_display}->SetLabel("off");
     }
 
     # humidity
 
     if ($self->{h_limit} > $hum){
         $self->{humidity}->SetLabel("*$hum %");
+        $self->{aux2_pin}->write(HIGH);
+        $self->{aux2_display}->SetLabel("on");
     }
     else {
         $self->{humidity}->SetLabel("$hum %");
+        $self->{aux2_pin}->write(LOW);
+        $self->{aux2_display}->SetLabel("off");
     }
 }
 sub aux1_on {
