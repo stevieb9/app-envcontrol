@@ -312,45 +312,45 @@ sub buttons {
 
      $self->{aux3_on} = Wx::Button->new(
         $panel,
-        8,
+        9,
         "on",
         $self->{xy}{aux3_on},
     );
 
-    EVT_BUTTON($self, 8, \&aux3_on);
+    EVT_BUTTON($self, 9, \&aux3_on);
 
     # aux3 off
 
      $self->{aux3_off} = Wx::Button->new(
         $panel,
-        9,
+        10,
         "off",
         $self->{xy}{aux3_off},
     );
 
-    EVT_BUTTON($self, 9, \&aux3_off);
+    EVT_BUTTON($self, 10, \&aux3_off);
 
     # aux4 on
 
      $self->{aux4_on} = Wx::Button->new(
         $panel,
-        10,
+        11,
         "on",
         $self->{xy}{aux4_on},
     );
 
-    EVT_BUTTON($self, 10, \&aux4_on);
+    EVT_BUTTON($self, 11, \&aux4_on);
 
     # aux4 off
 
      $self->{aux4_off} = Wx::Button->new(
         $panel,
-        11,
+        12,
         "off",
         $self->{xy}{aux4_off},
     );
 
-    EVT_BUTTON($self, 11, \&aux4_off);
+    EVT_BUTTON($self, 12, \&aux4_off);
 }
 sub temp_check_event {
     my ($self, $panel) = @_;
