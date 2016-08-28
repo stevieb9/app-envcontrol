@@ -13,8 +13,9 @@ package EnvControlFrame;
 
 use Wx::Event qw(EVT_BUTTON EVT_TIMER );
 use base qw/Wx::Frame/;
+use RPi::WiringPi::Constant qw(:all);
 
-my $pi = RPi::WiringPi->new(setup => 'none');
+my $pi = RPi::WiringPi->new(setup => 'WPI');
 my $env = RPi::DHT11::EnvControl->new(spin => 1);
 
 sub new {
@@ -23,9 +24,12 @@ sub new {
 
     my $panel = $self->panel;
 
+    $self->_pin_setup;
     $self->_xy;
+
     $self->display_headers($panel);
     $self->display_env($panel);
+
     $self->limits(78, 20);
     $self->display_limits($panel);
 
@@ -57,6 +61,8 @@ sub display_headers {
 
     my $font = Wx::Font->new(16);
 
+    # temp header
+
     $self->{t_header} = Wx::StaticText->new(
         $panel,
         1,
@@ -66,6 +72,8 @@ sub display_headers {
 
     $self->{t_header}->SetFont($font);
 
+    # humidity header
+
     $self->{h_header} = Wx::StaticText->new(
         $panel,
         2,
@@ -74,6 +82,17 @@ sub display_headers {
     );
 
     $self->{h_header}->SetFont($font);
+
+    # aux 1 header
+
+    $self->{aux1_header} = Wx::StaticText->new(
+        $panel,
+        3,
+        "Auxillary #1",
+        $self->{xy}{aux1_header}
+    );
+
+    $self->{aux1_header}->SetFont($font);
 }
 sub display_limits {
     my ($self, $panel) = @_;
@@ -94,6 +113,17 @@ sub display_limits {
         2,
         "Min: $self->{h_limit}",
         $self->{xy}{h_limit},
+    );
+
+    $self->{h_display}->SetFont($font);
+
+    # aux1 status
+
+    $self->{aux1_display} = Wx::StaticText->new(
+        $panel,
+        3,
+        "off",
+        $self->{xy}{aux1_status},
     );
 
     $self->{h_display}->SetFont($font);
@@ -166,7 +196,30 @@ sub buttons {
         $self->{xy}{h_raise},
     );
 
-    EVT_BUTTON($self, 4, \&hum_raise);
+    EVT_BUTTON($self, 4, \&aux1_on);
+
+    # aux1 on
+
+     $self->{aux1_on} = Wx::Button->new(
+        $panel,
+        5,
+        "on",
+        $self->{xy}{aux1_on},
+    );
+
+    EVT_BUTTON($self, 5, \&aux1_on);
+
+    # aux1 off
+
+     $self->{aux1_off} = Wx::Button->new(
+        $panel,
+        6,
+        "off",
+        $self->{xy}{aux1_off},
+    );
+
+    EVT_BUTTON($self, 6, \&aux1_off);
+
 }
 sub temp_check_event {
     my ($self, $panel) = @_;
@@ -198,6 +251,14 @@ sub get_env {
         $self->{humidity}->SetLabel("$hum %");
     }
 }
+sub aux1_on {
+    my $self = shift;
+    $self->{aux1_pin}->write(HIGH);
+}
+sub aux1_off {
+    my $self = shift;
+    $self->{aux1_pin}->write(LOW);
+}
 sub temp_raise {
     my( $self, $event ) = @_;
     $self->{t_limit}++;
@@ -227,19 +288,30 @@ sub _xy {
         t_header    => [50, 5],
         temp        => [50, 30],
         t_limit     => [140, 30],
-        t_raise     => [140, 60],
         t_lower     => [50, 60],
+        t_raise     => [140, 60],
 
         # humidity
 
         h_header    => [50, 120],
         humidity    => [50, 145],
         h_limit     => [140, 145],
-        h_raise     => [140, 175],
         h_lower     => [50, 175],
+        h_raise     => [140, 175],
+
+        # aux 1
+
+        aux1_header => [240, 5],
+        aux1_on     => [240, 60],
+        aux1_off    => [330, 60],
     };
 }
-
+sub _pin_setup {
+    my $self = shift;
+    $self->{aux1_pin} = $pi->pin(29);
+    $self->{aux1_pin}->mode(OUTPUT);
+    $self->{aux1_pin}->write(LOW);
+}
 package EnvControl;
 
 use base qw(Wx::App);
@@ -261,6 +333,8 @@ package main;
 
 my $app = EnvControl->new();
 $app->MainLoop();
+
+$pi->cleanup;
 
 =cut
 
