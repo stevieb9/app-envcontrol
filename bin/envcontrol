@@ -361,7 +361,7 @@ sub temp_check_event {
 sub get_env {
     my ($self, $event) = @_;
 
-    my $temp = $env->temp('feature');
+    my $temp = $env->temp('f');
     my $hum = $env->humidity;
 
     # temp
