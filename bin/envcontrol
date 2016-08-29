@@ -57,12 +57,10 @@ sub limits {
     $self->{h_limit} = $h;
 }
 sub display_headers {
-     my ($self, $panel) = @_;
-
+    my ($self, $panel) = @_;
     my $font = Wx::Font->new(16);
 
     # temp header
-
     $self->{t_header} = Wx::StaticText->new(
         $panel,
         1,
@@ -73,7 +71,6 @@ sub display_headers {
     $self->{t_header}->SetFont($font);
 
     # humidity header
-
     $self->{h_header} = Wx::StaticText->new(
         $panel,
         2,
@@ -84,7 +81,6 @@ sub display_headers {
     $self->{h_header}->SetFont($font);
 
     # aux 1 header
-
     $self->{aux1_header} = Wx::StaticText->new(
         $panel,
         3,
@@ -95,7 +91,6 @@ sub display_headers {
     $self->{aux1_header}->SetFont($font);
 
     # aux 2 header
-
     $self->{aux2_header} = Wx::StaticText->new(
         $panel,
         3,
@@ -105,8 +100,7 @@ sub display_headers {
 
     $self->{aux2_header}->SetFont($font);
 
-     # aux 3 header
-
+    # aux 3 header
     $self->{aux3_header} = Wx::StaticText->new(
         $panel,
         4,
@@ -117,7 +111,6 @@ sub display_headers {
     $self->{aux3_header}->SetFont($font);
 
     # aux 4 header
-
     $self->{aux4_header} = Wx::StaticText->new(
         $panel,
         5,
@@ -151,7 +144,6 @@ sub display_limits {
     $self->{h_display}->SetFont($font);
 
     # aux1 status
-
     $self->{aux1_display} = Wx::StaticText->new(
         $panel,
         3,
@@ -161,8 +153,7 @@ sub display_limits {
 
     $self->{aux1_display}->SetFont($font);
 
-     # aux2 status
-
+    # aux2 status
     $self->{aux2_display} = Wx::StaticText->new(
         $panel,
         4,
@@ -173,7 +164,6 @@ sub display_limits {
     $self->{aux2_display}->SetFont($font);
 
     # aux3 status
-
     $self->{aux3_display} = Wx::StaticText->new(
         $panel,
         5,
@@ -184,7 +174,6 @@ sub display_limits {
     $self->{aux3_display}->SetFont($font);
 
     # aux4 status
-
     $self->{aux4_display} = Wx::StaticText->new(
         $panel,
         6,
