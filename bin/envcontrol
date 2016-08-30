@@ -11,7 +11,7 @@ our $VERSION = '0.01';
 
 package EnvControlFrame;
 
-use Wx::Event qw(EVT_BUTTON EVT_TIMER );
+use Wx::Event qw(EVT_BUTTON EVT_TIMER);
 use base qw/Wx::Frame/;
 use RPi::WiringPi::Constant qw(:all);
 
@@ -140,7 +140,7 @@ sub display_limits {
         $self->{xy}{t_limit},
     );
 
-    $self->{t_display}->SetFont($font);
+    $self->{t_display}->SetFont( $font );
 
     $self->{h_display} = Wx::StaticText->new(
         $panel,
@@ -149,11 +149,12 @@ sub display_limits {
         $self->{xy}{h_limit},
     );
 
-    $self->{h_display}->SetFont($font);
-
+    $self->{h_display}->SetFont( $font );
+}
 sub display_aux_status {
     my ($self, $panel) = @_;
 
+    my $font = Wx::Font->new(16);
     # aux1 status
 
     $self->{aux1_display} = Wx::StaticText->new(
@@ -581,6 +582,7 @@ sub _pin_setup {
     $self->{aux4_pin}->write(LOW);
 
 }
+
 package EnvControl;
 
 use base qw(Wx::App);
