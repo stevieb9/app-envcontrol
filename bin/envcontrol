@@ -166,7 +166,7 @@ sub init_aux_status {
     );
 
     $self->{aux1_display}->SetFont($font);
-    $self->{aux1_display}->SetForegroundcolour(
+    $self->{aux1_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 
@@ -180,7 +180,7 @@ sub init_aux_status {
     );
 
     $self->{aux2_display}->SetFont($font);
-    $self->{aux2_display}->SetForegroundcolour(
+    $self->{aux2_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 
@@ -194,7 +194,7 @@ sub init_aux_status {
     );
 
     $self->{aux3_display}->SetFont($font);
-    $self->{aux3_display}->SetForegroundcolour(
+    $self->{aux3_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 
@@ -208,7 +208,7 @@ sub init_aux_status {
     );
 
     $self->{aux4_display}->SetFont($font);
-    $self->{aux4_display}->SetForegroundcolour(
+    $self->{aux4_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 }
@@ -386,20 +386,23 @@ sub get_env {
 
     if ($self->{t_limit} < $temp){
         $self->{temp}->SetLabel("$temp F");
-        $self->{temp}->SetForegroundcolour(
+        $self->{temp}->SetForegroundColour(
             Wx::Colour->new(255, 0, 0) # red
         );
         $self->{aux1_pin}->write(HIGH);
         $self->{aux1_display}->SetLabel("on");
-        $self->{aux1_display}->SetForegroundcolour(
+        $self->{aux1_display}->SetForegroundColour(
             Wx::Colour->new(0, 204, 0) # green
         );
     }
     else {
         $self->{temp}->SetLabel("$temp F");
+        $self->{temp}->SetForegroundColour(
+            Wx::Colour->new(0, 0, 0) # black
+        );
         $self->{aux1_pin}->write(LOW);
         $self->{aux1_display}->SetLabel("off");
-        $self->{aux1_display}->SetForegroundcolour(
+        $self->{aux1_display}->SetForegroundColour(
             Wx::Colour->new(255, 0, 0) # red
         );
     }
@@ -408,20 +411,23 @@ sub get_env {
 
     if ($self->{h_limit} > $hum){
         $self->{humidity}->SetLabel("$hum %");
-        $self->{humidity}->SetForegroundcolour(
+        $self->{humidity}->SetForegroundColour(
             Wx::Colour->new(255, 0, 0) # red
         );
         $self->{aux2_pin}->write(HIGH);
         $self->{aux2_display}->SetLabel("on");
-        $self->{aux2_display}->SetForegroundcolour(
+        $self->{aux2_display}->SetForegroundColour(
             Wx::Colour->new(0, 204, 0) # green
         );
     }
     else {
         $self->{humidity}->SetLabel("$hum %");
+        $self->{humidity}->SetForegroundColour(
+            Wx::Colour->new(0, 0, 0) # black
+        );
         $self->{aux2_pin}->write(LOW);
         $self->{aux2_display}->SetLabel("off");
-        $self->{aux2_display}->SetForegroundcolour(
+        $self->{aux2_display}->SetForegroundColour(
             Wx::Colour->new(255, 0, 0) # red
         );
     }
@@ -430,7 +436,7 @@ sub aux1_on {
     my $self = shift;
     $self->{aux1_pin}->write(HIGH);
     $self->{aux1_display}->SetLabel("on");
-    $self->{aux1_display}->SetForegroundcolour(
+    $self->{aux1_display}->SetForegroundColour(
         Wx::Colour->new(0, 204, 0) # green
     );
 }
@@ -438,7 +444,7 @@ sub aux1_off {
     my $self = shift;
     $self->{aux1_pin}->write(LOW);
     $self->{aux1_display}->SetLabel("off");
-    $self->{aux1_display}->SetForegroundcolour(
+    $self->{aux1_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 }
@@ -446,7 +452,7 @@ sub aux2_on {
     my $self = shift;
     $self->{aux2_pin}->write(HIGH);
     $self->{aux2_display}->SetLabel("on");
-    $self->{aux2_display}->SetForegroundcolour(
+    $self->{aux2_display}->SetForegroundColour(
         Wx::Colour->new(0, 204, 0) # green
     );
 }
@@ -454,7 +460,7 @@ sub aux2_off {
     my $self = shift;
     $self->{aux2_pin}->write(LOW);
     $self->{aux2_display}->SetLabel("off");
-    $self->{aux2_display}->SetForegroundcolour(
+    $self->{aux2_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 }
@@ -462,7 +468,7 @@ sub aux3_on {
     my $self = shift;
     $self->{aux3_pin}->write(HIGH);
     $self->{aux3_display}->SetLabel("on");
-    $self->{aux3_display}->SetForegroundcolour(
+    $self->{aux3_display}->SetForegroundColour(
         Wx::Colour->new(0, 204, 0) # green
     );
 }
@@ -470,7 +476,7 @@ sub aux3_off {
     my $self = shift;
     $self->{aux3_pin}->write(LOW);
     $self->{aux3_display}->SetLabel("off");
-    $self->{aux3_display}->SetForegroundcolour(
+    $self->{aux3_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 }
@@ -478,7 +484,7 @@ sub aux4_on {
     my $self = shift;
     $self->{aux4_pin}->write(HIGH);
     $self->{aux4_display}->SetLabel("on");
-    $self->{aux4_display}->SetForegroundcolour(
+    $self->{aux4_display}->SetForegroundColour(
         Wx::Colour->new(0, 204, 0) # green
     );
 }
@@ -486,7 +492,7 @@ sub aux4_off {
     my $self = shift;
     $self->{aux4_pin}->write(LOW);
     $self->{aux4_display}->SetLabel("off");
-    $self->{aux4_display}->SetForegroundcolour(
+    $self->{aux4_display}->SetForegroundColour(
         Wx::Colour->new(255, 0, 0) # red
     );
 }
