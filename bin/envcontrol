@@ -603,8 +603,8 @@ sub OnInit {
 
 package main;
 
-my $app = EnvControl->new();
-$app->MainLoop();
+my $app = EnvControl->new;
+$app->MainLoop;
 
 $pi->cleanup;
 
@@ -617,7 +617,12 @@ App::envcontrol - Wx GUI-based climate control touch interface for Raspberry Pi
 =head1 DESCRIPTION
 
 This application is for the Raspberry Pi, designed as a touch-screen graphical
-interface.
+interface. It displays environment temperature, humidity with the ability to
+set limits. When those limits are reached, you can optionally connect external
+120v components to turn on and off automatically.
+
+There are also extra auxillary component slots, that enables you to turn on/off
+other devices with the click of a button.
 
 Minimum requirements:
 
