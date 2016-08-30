@@ -27,14 +27,14 @@ sub new {
     $self->_pin_setup;
     $self->_xy;
 
-    $self->display_headers($panel);
-    $self->display_env($panel);
+    $self->init_headers($panel);
+    $self->init_env($panel);
 
     $self->limits(78, 20);
-    $self->display_limits($panel);
+    $self->init_limits($panel);
 
-    $self->display_aux_status($panel);
-    $self->display_buttons($panel);
+    $self->init_aux_status($panel);
+    $self->init_buttons($panel);
 
     $self->env_check_event($panel);
 
@@ -57,7 +57,7 @@ sub limits {
     $self->{t_limit} = $t;
     $self->{h_limit} = $h;
 }
-sub display_headers {
+sub init_headers {
      my ($self, $panel) = @_;
 
     my $font = Wx::Font->new(16);
@@ -128,7 +128,7 @@ sub display_headers {
 
     $self->{aux4_header}->SetFont($font);
 }
-sub display_limits {
+sub init_limits {
     my ($self, $panel) = @_;
 
     my $font = Wx::Font->new(16);
@@ -151,10 +151,11 @@ sub display_limits {
 
     $self->{h_display}->SetFont( $font );
 }
-sub display_aux_status {
+sub init_aux_status {
     my ($self, $panel) = @_;
 
     my $font = Wx::Font->new(16);
+
     # aux1 status
 
     $self->{aux1_display} = Wx::StaticText->new(
@@ -211,7 +212,7 @@ sub display_aux_status {
         Wx::Colour->new(255, 0, 0) # red
     );
 }
-sub display_env {
+sub init_env {
     my ($self, $panel) = @_;
 
     my $font = Wx::Font->new(16);
@@ -234,7 +235,7 @@ sub display_env {
 
     $self->{humidity}->SetFont($font);
 }
-sub display_buttons {
+sub init_buttons {
     my ($self, $panel) = @_;
 
      # temp limit down button
