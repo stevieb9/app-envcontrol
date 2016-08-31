@@ -22,6 +22,10 @@ sub new {
     my $class = shift;
     my $self = $class->SUPER::new(@_);
 
+    $self->{env_cycle} = 10000;
+    $self->{t_aux_cycle_time} = 900000;
+    $self->{t_aux_cycle} = $self->{t_aux_cycle_time};
+
     my $panel = $self->panel;
 
     $self->_pin_setup;
@@ -373,7 +377,7 @@ sub init_buttons {
 sub env_check_event {
     my ($self, $panel) = @_;
     my $timer  = Wx::Timer->new($self, -1,);
-    $timer->Start(10000);
+    $timer->Start($self->{env_cycle});
     EVT_TIMER $self, $timer, \&get_env;
 }
 sub get_env {
@@ -383,6 +387,10 @@ sub get_env {
     my $hum = $env->humidity;
 
     # temp
+
+    if ($self->{t_aux_triggered}){
+        $self->{t_aux_cycle} = $self->{t_aux_cycle} - $self->{env_cycle};
+    }
 
     if ($self->{t_limit} < $temp){
         $self->{temp}->SetLabel("$temp F");
@@ -394,17 +402,24 @@ sub get_env {
         $self->{aux1_display}->SetForegroundColour(
             Wx::Colour->new(0, 204, 0) # green
         );
+
+        $self->{t_aux_triggered} = 1;
     }
     else {
         $self->{temp}->SetLabel("$temp F");
         $self->{temp}->SetForegroundColour(
             Wx::Colour->new(0, 0, 0) # black
         );
-        $self->{aux1_pin}->write(LOW);
-        $self->{aux1_display}->SetLabel("off");
-        $self->{aux1_display}->SetForegroundColour(
-            Wx::Colour->new(255, 0, 0) # red
-        );
+
+        if ($self->{t_aux_triggered} && $self->{t_aux_cycle} <= 0){
+            $self->{aux1_pin}->write( LOW );
+            $self->{aux1_display}->SetLabel( "off" );
+            $self->{aux1_display}->SetForegroundColour(
+                Wx::Colour->new( 255, 0, 0 ) # red
+            );
+            $self->{t_aux_triggered} = 0;
+            $self->{t_aux_cycle} = $self->{t_aux_cycle_time};
+        }
     }
 
     # humidity
@@ -588,6 +603,10 @@ sub _pin_setup {
     $self->{aux4_pin}->mode(OUTPUT);
     $self->{aux4_pin}->write(LOW);
 
+}
+sub _cycle {
+    my ($self, $sec) = @_;
+    return $sec * 1000;
 }
 
 package EnvControl;
