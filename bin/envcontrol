@@ -40,7 +40,7 @@ sub new {
     $self->init_aux_status($panel);
     $self->init_buttons($panel);
 
-    $self->env_check_event($panel);
+    $self->event_env_check($panel);
 
     return $self;
 }
@@ -374,7 +374,7 @@ sub init_buttons {
 
     EVT_BUTTON($self, 12, \&aux4_off);
 }
-sub env_check_event {
+sub event_env_check {
     my ($self, $panel) = @_;
     my $timer  = Wx::Timer->new($self, -1,);
     $timer->Start($self->{env_cycle});
