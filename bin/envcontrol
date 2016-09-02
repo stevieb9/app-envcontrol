@@ -28,6 +28,11 @@ sub new {
 
     my $panel = $self->panel;
 
+    $self->{aux1_pin} = $pi->pin(29); # temp
+    $self->{aux2_pin} = $pi->pin(27); # humidity
+    $self->{aux3_pin} = $pi->pin(26);
+    $self->{aux4_pin} = $pi->pin(4);
+
     $self->_pin_setup;
     $self->_xy;
 
@@ -584,22 +589,18 @@ sub _pin_setup {
     my $self = shift;
 
     # aux 1
-    $self->{aux1_pin} = $pi->pin(29);
     $self->{aux1_pin}->mode(OUTPUT);
     $self->{aux1_pin}->write(LOW);
 
     # aux 2
-    $self->{aux2_pin} = $pi->pin(27);
     $self->{aux2_pin}->mode(OUTPUT);
     $self->{aux2_pin}->write(LOW);
 
     # aux 3
-    $self->{aux3_pin} = $pi->pin(26);
     $self->{aux3_pin}->mode(OUTPUT);
     $self->{aux3_pin}->write(LOW);
 
     # aux 4
-    $self->{aux4_pin} = $pi->pin(4);
     $self->{aux4_pin}->mode(OUTPUT);
     $self->{aux4_pin}->write(LOW);
 
