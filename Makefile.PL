@@ -33,7 +33,7 @@ WriteMakefile(
         'Test::More' => 0,
     },
     PREREQ_PM => {
-        'RPi::DHT11::EnvControl' => 0.07,
+        'RPi::DHT11' => 1.00,
         'RPi::WiringPi' => 1.01,
         Wx => 0,
     },
